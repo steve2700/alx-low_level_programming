@@ -8,8 +8,9 @@
  * Return :always return 0
  *
  */
-int main()
+int main(void)
 {
+
 	int n;
 
 	srand(time(0));
@@ -25,6 +26,7 @@ int main()
 		printf("%d is positive\n", n);
 	}
 	return (0);
-
 }
+
+
 
