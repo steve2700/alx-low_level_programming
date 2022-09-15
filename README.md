@@ -1,1 +1,2 @@
-The new project
+#!/bin/bash
+echo 'hello world' > README.md
