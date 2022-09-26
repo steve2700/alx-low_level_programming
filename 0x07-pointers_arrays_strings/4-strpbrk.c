@@ -1,29 +1,26 @@
-#include "main.h"
 #include <stdio.h>
+#include "main."
 /**
- * _strspn - length of prefix substring
- * @s: string to go through
- * @accept: accepted bytes
- * Return: returns usigned values
+ * _strpbrk - finds string
+ * @s: string to find stuff
+ * @accept: accepting arrays
+ *
+ * Return: returns new value
  */
-unsigned int _strspn(char *s, char *accept)
+char *_strpbrk(char *s, char *accept)
 {
 	int i;
 	int j;
-	unsigned int result = 0;
 
 	for (i = 0; s[i] != '\0'; i++)
 	{
-		for (j = 0; s[j] != '\0'; j++)
+		for (j = 0; accept[j] != '\0'; j++)
 		{
 			if (s[i] == accept[j])
 			{
-				result++;
-				break;
+				return (s + i);
 			}
 		}
-		if (s[j] == '\0')
-			return (result);
 	}
-	return (result);
+	return (0);
 }
