@@ -2,84 +2,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- * helper - helps function
- * @word: wordcount
- * @len: length
- * @str: string to go through
- * @s: array you are assigning
+ * argstostr - gives array of args
+ * @ac: argument count
+ * @av: array of arguments
  * Return: char value
  */
-char **helper(int word, int len, char *str, char **s)
+char *argstostr(int ac, char **av)
 {
-	int i, k, j;
+	int size;
+	char *s;
+	int i;
+	int j;
+	int k;
 
-	j = 0;
-	for (i = 0; i < word; i++)
-	{
-		k = 0;
-		for (; j < len; j++)
-		{
-			if (str[0] != ' ' || str[j] != ' ')
-			{
-				s[i][k] = str[j];
-				k++;
-			}
-			if (j != 0 && str[j] == ' ' && str[j - 1] != ' ')
-			{
-				j++;
-				break;
-			}
-		}
-		s[i][k + 1] = '\0';
-	}
-	s[word + 1] = NULL;
-	return (s);
-}
-/**
- * strtow - string to words
- * @str: string to check
- * Return: return char value
- */
-char **strtow(char *str)
-{
-	int len, i, j, size, k, word;
-	char **s;
-
-	if (str == NULL)
+	if (ac == 0 || av == NULL)
 		return (NULL);
-	len = 0;
-	word = 0;
-	while (str[len] != '\0')
+
+	for (i = 0; i < ac; i++)
 	{
-		if (str[0] != ' ')
-		word++;
-		if (str[len] != ' ' && str[len - 1] == ' ' && len != 0)
-			word++;
-		len++;
+		for (j = 0; av[i][j] != '\0'; j++)
+			size++;
 	}
-	s = (char **)malloc(sizeof(char *) * word + 1);
+
+	size += (ac + 1);
+	s = malloc(sizeof(char) * size);
 	if (s == NULL)
 		return (NULL);
-	j = 0;
-	for (i = 0; i < word; i++)
+	k = 0;
+	for (i = 0; i < ac; i++)
 	{
-		size = 0;
-		for (; j < len; j++)
+		for (j = 0; av[i][j] != '\0'; j++)
 		{
-			if (str[0] != ' ' || str[j] != ' ')
-				size++;
-			if (str[j] == ' ' && size > 0)
-				break;
+			s[k] = av[i][j];
+			k++;
 		}
-		printf("%d\n", size);
-		s[i] = (char *)malloc(sizeof(char) * size + 1);
-		if (s[i] == NULL)
-		{
-			for (k = i - 1; k >= 0; k--)
-				free(s[k]);
-			free(s);
-		}
+		s[k] = '\n';
+		k++;
 	}
-	s = helper(word, len, str, s);
+
+	s[k] = '\0';
+
 	return (s);
 }
