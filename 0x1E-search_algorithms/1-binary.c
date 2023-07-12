@@ -1,62 +1,45 @@
 #include "search_algos.h"
 
 /**
- * print_array - prints the array
- * @array: array to print
- * @start: starting point of the array
- * @end: end of the array
- */
-
-void print_array(int *array, size_t start, size_t end)
-{
-	size_t i;
-
-	printf("Searching in array:");
-	for (i = start; i <= end; i++)
-	{
-		if (i != end)
-			printf(" %u,", array[i]);
-		else
-			printf(" %u\n", array[i]);
-	}
-}
-/**
- * actual_search - searches through the array
- * @array: array to search through
- * @l: lower end
- * @h: high end
+ * binary_search - searches for a value in an integer array using a binary
+ * search algorithm, not guaranteed to return lowest index if `value` appears
+ * twice in `array`
+ * @array: pointer to first element of array to seach
+ * @size: number of elements in array
  * @value: value to search for
- * Return: index or -1
+ *
+ * Return: index containing `value`, or -1 if `value` not found or
+ * `array` is NULL
  */
-int actual_search(int *array, size_t l, size_t h, int value)
-{
-	size_t mid = l + (h - l) / 2;
 
-	print_array(array, l, h);
-	if (array[mid] == value)
-		return (mid);
-	if (l == h)
-		return (-1);
-	if (h > l)
-	{
-		if (array[mid] > value)
-			return (actual_search(array, l, mid - 1, value));
-		else
-			return (actual_search(array, mid + 1, h,  value));
-	}
-	return (-1);
-}
-/**
- * binary_search - searches binary
- * @array: array to search through
- * @size: size of the array
- * @value: value of the array
- * Return: int value
- */
 int binary_search(int *array, size_t size, int value)
 {
-	if (array == NULL)
-		return (-1);
+	int low, mid, high;
+	int x;
 
-	return (actual_search(array, 0, size - 1, value));
+	if (array == NULL)
+	{
+		return (-1);
+	}
+
+	low = 0;
+	high = size - 1;
+
+	while (low <= high)
+	{
+		mid = (low + high) / 2;
+
+		printf("Searching in array: ");
+		for (x = low; x <= high; x++)
+			printf("%i%s", array[x], x == high ? "\n" : ", ");
+
+		if (array[mid] < value)
+			low = mid + 1;
+		else if (array[mid] > value)
+			high = mid - 1;
+		else
+			return (mid);
+	}
+
+	return (-1);
 }
